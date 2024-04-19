@@ -1872,7 +1872,7 @@ def stamp(n_img, delta, mask):
     mask0 = nc_mask_img()
     mask = mask * mask0
     r_img = n_img.copy()
-    mask = mask.reshape((1,1,224,224))
+    mask = mask.reshape((1,1,32,32))
     r_img = n_img * (1-mask) + delta * mask
     return r_img
 
@@ -2624,6 +2624,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     for fn in fns:
         # read the image (using skimage)
         img = skimage.io.imread(fn)
+        print(fn.split('_'))
         fys.append(int(fn.split('_')[-3]))
         # # convert to BGR (training codebase uses cv2 to load images which uses bgr format)
         # r = img[:, :, 0]
