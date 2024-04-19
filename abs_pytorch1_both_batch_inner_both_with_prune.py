@@ -2493,9 +2493,9 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
 
     model = models.resnet18(pretrained=False)
 
-    state_dict = torch.load(model_filepath)
+    state_dict = torch.load(model_filepath)['model']
 
-    state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
+    # state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
     # Load the state dictionary into the model
     model.load_state_dict(state_dict)
