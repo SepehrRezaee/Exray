@@ -2468,7 +2468,7 @@ def test(model, model_type, test_xs, test_ys, children, target_layers, sample_la
     if best_tscore > 0.99:
         if mode == 'mask':
             prune_flag = mask_prune_by_neuron_mask(test_xs, test_ys, t_images, best_base_label, tlabel, model, children, sample_layers)
-        else::
+        else:
             prune_flag = filter_prune_by_neuron_mask(test_xs, test_ys, t_images, best_base_label, tlabel, model, children, sample_layers)
         if prune_flag:
             best_tscore = 0
