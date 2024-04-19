@@ -2500,7 +2500,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     model.fc = nn.Linear(num_features, 10)
 
     # Now load your state dictionary
-    state_dict = torch.load('path_to_state_dict.pth')
+    state_dict = torch.load(model_filepath)['model']
     model.load_state_dict(state_dict)
 
 
