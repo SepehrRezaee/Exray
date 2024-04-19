@@ -2,6 +2,7 @@ import numpy as np
 import os
 import argparse
 import math
+import torchvision.models.resnet18 as resnet18
 
 # os.environ["OMP_NUM_THREADS"] = "4" # export OMP_NUM_THREADS=4
 # os.environ["OPENBLAS_NUM_THREADS"] = "4" # export OPENBLAS_NUM_THREADS=4
@@ -2490,7 +2491,19 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'temps')))
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'deltas')))
 
-    model = torch.load(model_filepath).cuda()
+    model = resnet18(pretrained=False)
+
+    state_dict = torch.load(model_filepath)
+
+    state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
+
+    # Load the state dictionary into the model
+    model.load_state_dict(state_dict)
+
+    # Transfer the model to GPU
+    model = model.cuda()
+
+    # model = torch.load(model_filepath).cuda()
     target_layers = []
     model_type = model.__class__.__name__
     children = list(model.children())
