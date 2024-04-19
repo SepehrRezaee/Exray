@@ -2491,14 +2491,26 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'temps')))
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'deltas')))
 
-    model = models.resnet18(pretrained=False)
+    model = models.resnet18(pretrained=False)  # Change to the correct ResNet variant if not ResNet18
 
-    state_dict = torch.load(model_filepath)['model']
+    # Change the number of output features of the last fully connected layer
+    # Adjust 10 to match the number of classes you have in your state dictionary
+    num_features = model.fc.in_features
+    model.fc = nn.Linear(num_features, 10)
+
+    # Now load your state dictionary
+    state_dict = torch.load('path_to_state_dict.pth')
+    model.load_state_dict(state_dict)
+
+
+    # model = models.resnet18(pretrained=False)
+
+    # state_dict = torch.load(model_filepath)['model']
 
     # state_dict = {k.replace('module.', ''): v for k, v in state_dict.items()}
 
     # Load the state dictionary into the model
-    model.load_state_dict(state_dict)
+    # model.load_state_dict(state_dict)
 
     # Transfer the model to GPU
     model = model.cuda()
