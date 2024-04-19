@@ -2,7 +2,7 @@ import numpy as np
 import os
 import argparse
 import math
-import torchvision.models.resnet18 as resnet18
+import torchvision.models as models
 
 # os.environ["OMP_NUM_THREADS"] = "4" # export OMP_NUM_THREADS=4
 # os.environ["OPENBLAS_NUM_THREADS"] = "4" # export OPENBLAS_NUM_THREADS=4
@@ -2491,7 +2491,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'temps')))
     os.system('mkdir -p {0}'.format(os.path.join(scratch_dirpath, 'deltas')))
 
-    model = resnet18(pretrained=False)
+    model = models.resnet18(pretrained=False)
 
     state_dict = torch.load(model_filepath)
 
