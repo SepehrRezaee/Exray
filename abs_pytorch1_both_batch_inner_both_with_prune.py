@@ -2639,7 +2639,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
 
         # perform tensor formatting and normalization explicitly
         # convert to CHW dimension ordering
-        img = np.transpose(img, (2, 0, 1))
+        img = np.transpose(img, (0, 1))
         # convert to NCHW dimension ordering
         img = np.expand_dims(img, 0)
         # normalize the image
