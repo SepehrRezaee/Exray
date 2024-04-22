@@ -2792,4 +2792,3 @@ if __name__ == "__main__":
 
     reasr = main(args.model_filepath, args.result_filepath, args.scratch_dirpath, args.examples_dirpath)
     print(reasr)
-    return reasr
