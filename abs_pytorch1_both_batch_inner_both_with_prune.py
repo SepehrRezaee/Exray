@@ -2747,6 +2747,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     reasr_info = []
     reasrs = []
     reasr_per_labels = []
+    reasr = 0
     if len(results) > 0:
         reasrs = []
         for result in results:
@@ -2784,8 +2785,8 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
         # f.write('{0} {1} {2} {3} {4} {5} {6} {7}\n'.format(\
         #         model_filepath, model_type, 'mode', freasr, freasr_per_label, 'time', sample_end - start, optm_end - sample_end) )
         f.write('mask {0} {1} {2}\n'.format(model_filepath, freasr, freasr_per_label, ))
-    print(acc)
-    return acc
+    print(reasr)
+    return reasr
 
 if __name__ == "__main__":
 
