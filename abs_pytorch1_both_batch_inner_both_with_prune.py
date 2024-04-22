@@ -2525,7 +2525,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     else:
         num_classes = list(model.named_modules())[-1][1].out_features
 
-    print('num classes', num_classes)
+    # print('num classes', num_classes)
 
     if model_type  == 'ResNet':
         children = list(model.children())
@@ -2632,10 +2632,10 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
         # b = img[:, :, 2]
         # img = np.stack((b, g, r), axis=2)
 
-        h, w = img.shape
+        h, w, c = img.shape
         dx = int((w - 224) / 2)
         dy = int((w - 224) / 2)
-        img = img[dy:dy+224, dx:dx+224]
+        img = img[dy:dy+224, dx:dx+224, :]
 
         # perform tensor formatting and normalization explicitly
         # convert to CHW dimension ordering
@@ -2727,7 +2727,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
 
     neuron_dict[list(nds[0].keys())[0]] = neurons_add
 
-    print('Compromised Neuron Candidates (Layer, Neuron, Target_Label)', neuron_dict)
+    # print('Compromised Neuron Candidates (Layer, Neuron, Target_Label)', neuron_dict)
     print('n_neurons_dict', n_neurons_dict)
 
     # neuron_dict['/home/share/trojai/trojai-round2-dataset/id-00000001/model.pt'] = [('InvertedResidual_18', 456, 6, 1.8939729, 10)]
