@@ -2742,7 +2742,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
     sample_end = time.time()
 
     # sys.exit()
-
+    acc = 0
     results = re_mask(model_type, model, neuron_dict, children, optz_xs, optz_ys, n_neurons_dict, scratch_dirpath, re_epochs, num_classes, f_n_re_imgs_per_label)
     reasr_info = []
     reasrs = []
@@ -2784,6 +2784,8 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
         # f.write('{0} {1} {2} {3} {4} {5} {6} {7}\n'.format(\
         #         model_filepath, model_type, 'mode', freasr, freasr_per_label, 'time', sample_end - start, optm_end - sample_end) )
         f.write('mask {0} {1} {2}\n'.format(model_filepath, freasr, freasr_per_label, ))
+
+    return acc
 
 if __name__ == "__main__":
 
