@@ -2790,4 +2790,6 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
 
 if __name__ == "__main__":
 
-    main(args.model_filepath, args.result_filepath, args.scratch_dirpath, args.examples_dirpath)
+    reasr = main(args.model_filepath, args.result_filepath, args.scratch_dirpath, args.examples_dirpath)
+    print(reasr)
+    return reasr
