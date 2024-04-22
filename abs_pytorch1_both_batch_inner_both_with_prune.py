@@ -2635,7 +2635,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
         h, w = img.shape
         dx = int((w - 224) / 2)
         dy = int((w - 224) / 2)
-        img = img[dy:dy+224, dx:dx+224, :]
+        img = img[dy:dy+224, dx:dx+224]
 
         # perform tensor formatting and normalization explicitly
         # convert to CHW dimension ordering
