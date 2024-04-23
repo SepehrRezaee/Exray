@@ -2632,14 +2632,17 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
         # b = img[:, :, 2]
         # img = np.stack((b, g, r), axis=2)
 
-        h, w, c = img.shape
+        h, w = img.shape
+        # , c
         dx = int((w - 224) / 2)
         dy = int((w - 224) / 2)
-        img = img[dy:dy+224, dx:dx+224, :]
+        # , :
+        img = img[dy:dy+224, dx:dx+224]
 
         # perform tensor formatting and normalization explicitly
         # convert to CHW dimension ordering
-        img = np.transpose(img, (2, 0, 1))
+        # 2, 
+        img = np.transpose(img, (0, 1))
         # convert to NCHW dimension ordering
         img = np.expand_dims(img, 0)
         # normalize the image
