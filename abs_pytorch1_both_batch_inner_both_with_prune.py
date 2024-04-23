@@ -259,12 +259,7 @@ def check_values(images, labels, model, children, target_layers, num_classes):
         for i in range( math.ceil(float(len(images))/batch_size) ):
             batch_data = torch.FloatTensor(images[batch_size*i:batch_size*(i+1)])
             batch_data = batch_data.cuda()
-            if batch_data.size(1) == 4:
-                print(50*"_")
-                print("batch_data.size", batch_data.size(1))
-                print(50*"_")
-                batch_data = batch_data[:, :3, :, :]
-
+            batch_data = batch_data[:, :3, :, :]
             # Now pass batch_data to your model
             inner_outputs = temp_model1(batch_data).cpu().detach().numpy()
             if channel_last:
