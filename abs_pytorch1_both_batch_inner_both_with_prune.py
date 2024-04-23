@@ -259,6 +259,10 @@ def check_values(images, labels, model, children, target_layers, num_classes):
         for i in range( math.ceil(float(len(images))/batch_size) ):
             batch_data = torch.FloatTensor(images[batch_size*i:batch_size*(i+1)])
             batch_data = batch_data.cuda()
+            if batch_data.size(1) == 4:
+                batch_data = batch_data[:, :3, :, :]
+
+            # Now pass batch_data to your model
             inner_outputs = temp_model1(batch_data).cpu().detach().numpy()
             if channel_last:
                 n_neurons = inner_outputs.shape[-1]
@@ -2707,7 +2711,7 @@ def main(model_filepath, result_filepath, scratch_dirpath, examples_dirpath, exa
 
     neuron_dict = {}
 
-    maxes, maxes_per_label, sample_layers, n_neurons_dict, top_check_labels_list =  check_values( test_xs, test_ys, model, children, target_layers, num_classes)
+    maxes, maxes_per_label, sample_layers, n_neurons_dict, top_check_labels_list = check_values( test_xs, test_ys, model, children, target_layers, num_classes)
     torch.cuda.empty_cache()
     all_ps, sample_layers = sample_neuron(sample_layers, sample_xs, sample_ys, model, children, target_layers, model_type, maxes, maxes_per_label)
     torch.cuda.empty_cache()
