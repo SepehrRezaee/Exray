@@ -260,6 +260,9 @@ def check_values(images, labels, model, children, target_layers, num_classes):
             batch_data = torch.FloatTensor(images[batch_size*i:batch_size*(i+1)])
             batch_data = batch_data.cuda()
             if batch_data.size(1) == 4:
+                print(50*"_")
+                print("batch_data.size", batch_data.size(1))
+                print(50*"_"
                 batch_data = batch_data[:, :3, :, :]
 
             # Now pass batch_data to your model
