@@ -262,7 +262,7 @@ def check_values(images, labels, model, children, target_layers, num_classes):
             if batch_data.size(1) == 4:
                 print(50*"_")
                 print("batch_data.size", batch_data.size(1))
-                print(50*"_"
+                print(50*"_")
                 batch_data = batch_data[:, :3, :, :]
 
             # Now pass batch_data to your model
