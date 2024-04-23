@@ -237,9 +237,9 @@ def channel_shuffle(x, groups):
 def check_values(images, labels, model, children, target_layers, num_classes):
     maxes = {}
     maxes_per_label  = {}
-    end_layer = len(children)-1
+    end_layer = len(children) - 1
     if has_softmax:
-        end_layer = len(children)-2
+        end_layer = len(children) - 2
 
     sample_layers = []
     for layer_i in range(1, end_layer):
@@ -256,11 +256,17 @@ def check_values(images, labels, model, children, target_layers, num_classes):
         temp_model1 = torch.nn.Sequential(*children[:layer_i+1])
 
         max_vals = []
-        for i in range( math.ceil(float(len(images))/batch_size) ):
-            batch_data = torch.FloatTensor(images[batch_size*i:batch_size*(i+1)])
+        for i in range(math.ceil(float(len(images)) / batch_size)):
+            # Make sure the batch_data tensor has four dimensions
+            batch_data = torch.FloatTensor(images[batch_size * i: batch_size * (i + 1)])
+            if batch_data.dim() == 3:  # If it is missing the batch dimension
+                batch_data = batch_data.unsqueeze(0)  # Add a batch dimension
             batch_data = batch_data.cuda()
-            batch_data = batch_data[:3, :, :]
-            # Now pass batch_data to your model
+            
+            # Ensure the input channels are correct, assuming the model expects 3 channels
+            if batch_data.size(1) == 4:  # If the batch_data has 4 channels
+                batch_data = batch_data[:, :3, :, :]  # Take only the first three channels
+
             inner_outputs = temp_model1(batch_data).cpu().detach().numpy()
             if channel_last:
                 n_neurons = inner_outputs.shape[-1]
