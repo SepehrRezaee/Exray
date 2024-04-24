@@ -433,8 +433,8 @@ def sample_neuron(sample_layers, images, labels, model, children, target_layers,
 
 def find_min_max(model_name, sample_layers, neuron_ks, max_ps, max_vals, imgs, n_classes, n_samples, n_imgs, base_l, cut_val=20, top_k = 10, addon=''):
     if base_l >= 0:
-        n_imgs = n_imgs//n_classes
-    
+        n_imgs = n_imgs // n_classes
+
     min_ps = {}
     min_vals = []
     for k in neuron_ks:
@@ -445,15 +445,22 @@ def find_min_max(model_name, sample_layers, neuron_ks, max_ps, max_vals, imgs, n
             img_l = int(img[0])
             if img_l == base_l or base_l < 0:
                 nk = (img, k[0], k[1])
-                l = max_ps[nk][0]
-                v = max_ps[nk][1]
-                vs.append(v)
-                ls.append(l)
-                if not ( l in vdict.keys() ):
-                    vdict[l] = [v]
-                else:
-                    vdict[l].append(v)
-        ml = max(set(ls), key=ls.count)
+                if nk in max_ps:
+                    l = max_ps[nk][0]
+                    v = max_ps[nk][1]
+                    vs.append(v)
+                    ls.append(l)
+                    if l not in vdict:
+                        vdict[l] = [v]
+                    else:
+                        vdict[l].append(v)
+
+        if ls:
+            ml = max(set(ls), key=ls.count)
+        else:
+            # Handle the case when ls is empty
+            # You could continue to the next iteration or handle it as needed
+            continue  # or provide a suitable default or error message if needed
 
 
         fvs = []
